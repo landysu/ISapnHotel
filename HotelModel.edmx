@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HotelOrderTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RoomMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MemberPhone" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MemberEMail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MemberPhoto" Type="varbinary(max)" />
+          <Property Name="MemberBirthday" Type="date" Nullable="false" />
+          <Property Name="MemberPassword" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="AdminID" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="回饋評價">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RoomId" Type="varchar" MaxLength="10" />
+          <Property Name="CommentPoint" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CommentDetail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CommentDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="房型資訊管理">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="RoomClassificationID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PingNumber" Type="int" Nullable="false" />
+          <Property Name="NumberPeople" Type="int" Nullable="false" />
+          <Property Name="RoomStyleID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HotelID" Type="int" Nullable="false" />
+          <Property Name="RoomStatus" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AdminID" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_回饋評價_RoomMember">
+          <End Role="RoomMember" Type="Self.RoomMember" Multiplicity="1" />
+          <End Role="回饋評價" Type="Self.回饋評價" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomMember">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="回饋評價">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_回饋評價_房型資訊管理">
+          <End Role="房型資訊管理" Type="Self.房型資訊管理" Multiplicity="0..1" />
+          <End Role="回饋評價" Type="Self.回饋評價" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="房型資訊管理">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="回饋評價">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelOrderTestModelStoreContainer">
+          <EntitySet Name="RoomMember" EntityType="Self.RoomMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="回饋評價" EntityType="Self.回饋評價" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="房型資訊管理" EntityType="Self.房型資訊管理" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_回饋評價_RoomMember" Association="Self.FK_回饋評價_RoomMember">
+            <End Role="RoomMember" EntitySet="RoomMember" />
+            <End Role="回饋評價" EntitySet="回饋評價" />
+          </AssociationSet>
+          <AssociationSet Name="FK_回饋評價_房型資訊管理" Association="Self.FK_回饋評價_房型資訊管理">
+            <End Role="房型資訊管理" EntitySet="房型資訊管理" />
+            <End Role="回饋評價" EntitySet="回饋評價" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HotelOrderTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="RoomMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberEMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MemberBirthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MemberPassword" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AdminID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="回饋評價" Relationship="Self.FK_回饋評價_RoomMember" FromRole="RoomMember" ToRole="回饋評價" />
+        </EntityType>
+        <EntityType Name="回饋評價">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CommentPoint" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CommentDetail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RoomMember" Relationship="Self.FK_回饋評價_RoomMember" FromRole="回饋評價" ToRole="RoomMember" />
+          <NavigationProperty Name="房型資訊管理" Relationship="Self.FK_回饋評價_房型資訊管理" FromRole="回饋評價" ToRole="房型資訊管理" />
+          <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="房型資訊管理">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoomClassificationID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PingNumber" Type="Int32" Nullable="false" />
+          <Property Name="NumberPeople" Type="Int32" Nullable="false" />
+          <Property Name="RoomStyleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HotelID" Type="Int32" Nullable="false" />
+          <Property Name="RoomStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AdminID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="回饋評價" Relationship="Self.FK_回饋評價_房型資訊管理" FromRole="房型資訊管理" ToRole="回饋評價" />
+        </EntityType>
+        <Association Name="FK_回饋評價_RoomMember">
+          <End Role="RoomMember" Type="Self.RoomMember" Multiplicity="1" />
+          <End Role="回饋評價" Type="Self.回饋評價" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomMember">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="回饋評價">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_回饋評價_房型資訊管理">
+          <End Role="房型資訊管理" Type="Self.房型資訊管理" Multiplicity="0..1" />
+          <End Role="回饋評價" Type="Self.回饋評價" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="房型資訊管理">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="回饋評價">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelOrderTestEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RoomMember" EntityType="Self.RoomMember" />
+          <EntitySet Name="回饋評價" EntityType="Self.回饋評價" />
+          <EntitySet Name="房型資訊管理" EntityType="Self.房型資訊管理" />
+          <AssociationSet Name="FK_回饋評價_RoomMember" Association="Self.FK_回饋評價_RoomMember">
+            <End Role="RoomMember" EntitySet="RoomMember" />
+            <End Role="回饋評價" EntitySet="回饋評價" />
+          </AssociationSet>
+          <AssociationSet Name="FK_回饋評價_房型資訊管理" Association="Self.FK_回饋評價_房型資訊管理">
+            <End Role="房型資訊管理" EntitySet="房型資訊管理" />
+            <End Role="回饋評價" EntitySet="回饋評價" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HotelOrderTestModelStoreContainer" CdmEntityContainer="HotelOrderTestEntities2">
+          <EntitySetMapping Name="RoomMember">
+            <EntityTypeMapping TypeName="HotelOrderTestModel.RoomMember">
+              <MappingFragment StoreEntitySet="RoomMember">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberPhone" ColumnName="MemberPhone" />
+                <ScalarProperty Name="MemberEMail" ColumnName="MemberEMail" />
+                <ScalarProperty Name="MemberPhoto" ColumnName="MemberPhoto" />
+                <ScalarProperty Name="MemberBirthday" ColumnName="MemberBirthday" />
+                <ScalarProperty Name="MemberPassword" ColumnName="MemberPassword" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="回饋評價">
+            <EntityTypeMapping TypeName="HotelOrderTestModel.回饋評價">
+              <MappingFragment StoreEntitySet="回饋評價">
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="CommentPoint" ColumnName="CommentPoint" />
+                <ScalarProperty Name="CommentDetail" ColumnName="CommentDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="房型資訊管理">
+            <EntityTypeMapping TypeName="HotelOrderTestModel.房型資訊管理">
+              <MappingFragment StoreEntitySet="房型資訊管理">
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="RoomClassificationID" ColumnName="RoomClassificationID" />
+                <ScalarProperty Name="PingNumber" ColumnName="PingNumber" />
+                <ScalarProperty Name="NumberPeople" ColumnName="NumberPeople" />
+                <ScalarProperty Name="RoomStyleID" ColumnName="RoomStyleID" />
+                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+                <ScalarProperty Name="RoomStatus" ColumnName="RoomStatus" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

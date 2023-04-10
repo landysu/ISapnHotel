@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HotelOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommentDate" Type="datetime" />
+          <Property Name="MemberID" Type="nvarchar" MaxLength="20" />
+          <Property Name="RoomId" Type="nvarchar" MaxLength="20" />
+          <Property Name="CommentPoint" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="CommentDetail" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RoomClassID" Type="nvarchar" MaxLength="20" />
+          <Property Name="RoomSize" Type="int" />
+          <Property Name="RoomPeople" Type="int" />
+          <Property Name="RoomStyleID" Type="nvarchar" MaxLength="20" />
+          <Property Name="HotelID" Type="int" />
+          <Property Name="RoomStatus" Type="nvarchar" MaxLength="20" />
+          <Property Name="AdminID" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="RoomMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="20" />
+          <Property Name="MemberPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="MemberEMail" Type="nvarchar(max)" />
+          <Property Name="MemberPhoto" Type="varbinary(max)" />
+          <Property Name="MemberBirthday" Type="date" />
+          <Property Name="MemberPassword" Type="nvarchar" MaxLength="20" />
+          <Property Name="AdminID" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_Comments_RoomMember">
+          <End Role="RoomMember" Type="Self.RoomMember" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomMember">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelOrderModelStoreContainer">
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomMember" EntityType="Self.RoomMember" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_RoomMember" Association="Self.FK_Comments_RoomMember">
+            <End Role="RoomMember" EntitySet="RoomMember" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HotelOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommentDate" Type="DateTime" Precision="3" />
+          <Property Name="MemberID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoomId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CommentPoint" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="CommentDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RoomMember" Relationship="Self.FK_Comments_RoomMember" FromRole="Comments" ToRole="RoomMember" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomClassID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoomSize" Type="Int32" />
+          <Property Name="RoomPeople" Type="Int32" />
+          <Property Name="RoomStyleID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HotelID" Type="Int32" />
+          <Property Name="RoomStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AdminID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RoomMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MemberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MemberEMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MemberPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MemberBirthday" Type="DateTime" Precision="0" />
+          <Property Name="MemberPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AdminID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_RoomMember" FromRole="RoomMember" ToRole="Comments" />
+        </EntityType>
+        <Association Name="FK_Comments_RoomMember">
+          <End Role="RoomMember" Type="Self.RoomMember" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomMember">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestHotelOrderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="RoomMembers" EntityType="Self.RoomMember" />
+          <AssociationSet Name="FK_Comments_RoomMember" Association="Self.FK_Comments_RoomMember">
+            <End Role="RoomMember" EntitySet="RoomMembers" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HotelOrderModelStoreContainer" CdmEntityContainer="TestHotelOrderEntities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="HotelOrderModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="CommentPoint" ColumnName="CommentPoint" />
+                <ScalarProperty Name="CommentDetail" ColumnName="CommentDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="HotelOrderModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="RoomClassID" ColumnName="RoomClassID" />
+                <ScalarProperty Name="RoomSize" ColumnName="RoomSize" />
+                <ScalarProperty Name="RoomPeople" ColumnName="RoomPeople" />
+                <ScalarProperty Name="RoomStyleID" ColumnName="RoomStyleID" />
+                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+                <ScalarProperty Name="RoomStatus" ColumnName="RoomStatus" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomMembers">
+            <EntityTypeMapping TypeName="HotelOrderModel.RoomMember">
+              <MappingFragment StoreEntitySet="RoomMember">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberPhone" ColumnName="MemberPhone" />
+                <ScalarProperty Name="MemberEMail" ColumnName="MemberEMail" />
+                <ScalarProperty Name="MemberPhoto" ColumnName="MemberPhoto" />
+                <ScalarProperty Name="MemberBirthday" ColumnName="MemberBirthday" />
+                <ScalarProperty Name="MemberPassword" ColumnName="MemberPassword" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
